@@ -22,6 +22,22 @@ jobs:
       with:
         go-version: 1.17
 
+    - name: Install libsoundio (Linux)
+      if: ${{ matrix.os == "ubuntu-latest" }}
+      run: apt install libsoundio-dev
+    
+    - name: Install libsoundio (macOS)
+      if: ${{ matrix.os == "macos-latest" }}
+      run: brew install libsoundio
+      
+    - name: Install libsoundio (Windows)
+      if: ${{ matrix.os == "windows-latest" }}
+      run: |
+        mkdir lib
+        wget "https://github.com/cameronmaske/libsoundio-binaries/raw/master/win/x64/libsoundio.dll" -outfile "lib/libsoundio.dll"
+        wget "https://github.com/cameronmaske/libsoundio-binaries/raw/master/win/x64/libsoundio.lib" -outfile "lib/libsoundio.lib"
+        echo ("$(pwd)/lib") >> $GITHUB_PATH
+        
     - name: Build
       run: go build -o ./alapi ./cmd/alapi
 
