@@ -186,6 +186,5 @@ func (d *DevicesMonitor) GetLevels() float64 {
 
 func (d *DevicesMonitor) Close() error {
 	d.stream.Destroy()
-	d.device.RemoveReference()
 	return nil
 }

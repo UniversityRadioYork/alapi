@@ -59,6 +59,7 @@ func main() {
 			device.RemoveReference()
 		} else {
 			monitored[key] = device
+			defer device.RemoveReference()
 		}
 	}
 
