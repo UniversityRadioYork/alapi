@@ -1,0 +1,9 @@
+{
+    "Backend": "ALSA",
+    "BufferLength": 1,
+    "Devices": {
+        "0": "default"
+    },
+    "Port": 4978,
+    "Bind": "0.0.0.0"
+}
