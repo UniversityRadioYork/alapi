@@ -33,7 +33,7 @@ Create a `config.json` file, following the example of `config.json.example` and 
 Here's what the fields mean:
 
 * `Backend`: the audio backend to use (if you're not sure what to use, alapi will print all known backends on startup)
-* `Devices`: a mapping of keys to device IDs - the keys can be anything, they're what will be referenced by the API
+* `Devices`: a mapping of keys to device names - the keys can be anything, they're what will be referenced by the API
 * `BufferLength`: how long to listen for
 * `Bind`: the hostname to bind for - for all IPs, use `"0.0.0.0"`
 * `Port`: the port to listen on

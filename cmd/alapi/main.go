@@ -50,7 +50,7 @@ func main() {
 		log.Printf("Found device: %s (ID %s)", device.Name(), device.ID())
 		var key string
 		for test, name := range cfg.Devices {
-			if name == device.ID() {
+			if name == device.Name() {
 				key = test
 				break
 			}
