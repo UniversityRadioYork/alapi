@@ -1,8 +1,7 @@
 ALAPI - Audio Levels API
 ===
 
-This is a simple little daemon that runs on a system, listens to incoming audio,
-and exposes a HTTP endpoint that tells people how loud it is. That's it.
+This is a simple little daemon that runs on a system, listens to incoming audio (on one or multiple devices), and exposes a HTTP endpoint that tells people how loud it is. That's it.
 
 ## Building
 
@@ -38,4 +37,4 @@ Here's what the fields mean:
 * `Bind`: the hostname to bind for - for all IPs, use `"0.0.0.0"`
 * `Port`: the port to listen on
 
-Then, run `./alapi -cfg=./config.json`.
+Then, run `./alapi -cfg=./config.json`. The API can be found on `/levels`.
