@@ -62,6 +62,10 @@ func main() {
 		}
 	}
 
+	if len(monitored) != len(cfg.Devices) {
+		log.Fatalf("Could not find all requested devices!\nRequested: %v\nFound: %v", cfg.Devices, monitored)
+	}
+
 	for key, dev := range monitored {
 		mon := monitor.DevicesMonitor{Config: cfg}
 		if err = mon.Init(dev); err != nil {
