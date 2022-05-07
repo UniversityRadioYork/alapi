@@ -1,0 +1,45 @@
+name: Rust
+
+on:
+  push:
+    branches: [ main, rust ]
+  pull_request:
+    branches: [ main, rust ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+
+      - uses: Swatinem/rust-cache@v1
+
+      - name: Install dependencies (Linux)
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: sudo apt update -y && sudo apt install -y libasound2-dev
+
+      - name: Build
+        run: cargo build --verbose --release
+
+      - name: Run tests
+        run: cargo test --verbose --release
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.0.0
+        with:
+          name: alapi-${{matrix.os}}${{ matrix.os == 'windows-latest' && '.exe' || '' }}
+          path: target/release/alapi${{ matrix.os == 'windows-latest' && '.exe' || '' }}

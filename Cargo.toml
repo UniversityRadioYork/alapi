@@ -1,5 +1,5 @@
 [package]
-name = "alapi-rs"
+name = "alapi"
 version = "0.1.0"
 edition = "2018"
 
@@ -9,12 +9,10 @@ edition = "2018"
 anyhow = "1.0.44"
 cpal = "0.13.4"
 crossbeam = "0.8.1"
-futures = "0.3.17"
 ringbuf = "0.2.7"
 rouille = "3.5.0"
 serde = "1.0.130"
 serde_derive = "1.0.130"
-single_value_channel = "1.2.2"
 toml = "0.5.8"
 url = "2.2.2"
 
