@@ -23,6 +23,9 @@ struct Monitor {
 
 impl Monitor {
     pub(crate) fn create(device: Device, period: Duration, channel_map: &'static HashMap<usize, String>, results: Sender<HashMap<String, f32>>) -> Result<Self> {
+        for cfg in device.supported_input_configs()? {
+            println!("for device {}: supported but non-default input config {:?}", device.name()?, cfg);
+        }
         let cfg = device.default_input_config()?;
         println!("for device {} using input config {:?}", device.name()?, cfg);
 
