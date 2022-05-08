@@ -1,0 +1,9 @@
+host = "CoreAudio"
+
+device = "UMC404HD 192k"
+
+channel_map = { 0 = "c0", 1 = "c1", 2 = "c2", 3 = "c3" }
+
+http_bind = "0.0.0.0:6389"
+
+sampling_factor = 5
