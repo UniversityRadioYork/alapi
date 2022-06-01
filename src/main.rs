@@ -32,7 +32,7 @@ impl Monitor {
     ) -> Result<Self> {
         let cfg: SupportedStreamConfig = device.supported_input_configs()?.find(|cfg| {
             println!("Potential stream config: {:?}", cfg);
-            cfg.sample_format() == SampleFormat::F32 && cfg.min_sample_rate() >= SAMPLE_RATE && (cfg.channels() as usize) >= channel_map.len()
+            cfg.sample_format() == SampleFormat::F32 && cfg.min_sample_rate() <= SAMPLE_RATE && cfg.max_sample_rate() >= SAMPLE_RATE && (cfg.channels() as usize) >= channel_map.len()
         }).expect("could not find an input config with the appropriate sample format and channel count").with_sample_rate(SAMPLE_RATE);
         println!("for device {} using input config {:?}", device.name()?, cfg);
 
