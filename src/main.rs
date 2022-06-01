@@ -75,8 +75,6 @@ impl Monitor {
                             if prod.is_full() {
                                 any_buf_full = true;
                             }
-                        } else {
-                            println!("No matching channel for {}", channel);
                         }
                     }
 
