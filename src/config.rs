@@ -14,6 +14,7 @@ const fn default_sampling_factor() -> usize {1}
 pub struct Config {
     pub host: String,
     pub device: String,
+    pub min_channels: usize,
     pub channel_map: HashMap<String, String>,
     #[serde(default = "default_bind")]
     pub http_bind: String,

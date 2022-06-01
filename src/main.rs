@@ -27,12 +27,13 @@ impl Monitor {
     pub(crate) fn create(
         device: Device,
         period: Duration,
+        min_channels: usize,
         channel_map: &'static HashMap<usize, String>,
         results: Sender<HashMap<String, f32>>,
     ) -> Result<Self> {
         let cfg: SupportedStreamConfig = device.supported_input_configs()?.find(|cfg| {
             println!("Potential stream config: {:?}", cfg);
-            cfg.sample_format() == SampleFormat::F32 && cfg.min_sample_rate() <= SAMPLE_RATE && cfg.max_sample_rate() >= SAMPLE_RATE && (cfg.channels() as usize) >= channel_map.len()
+            cfg.sample_format() == SampleFormat::F32 && cfg.min_sample_rate() <= SAMPLE_RATE && cfg.max_sample_rate() >= SAMPLE_RATE && (cfg.channels() as usize) >= min_channels
         }).expect("could not find an input config with the appropriate sample format and channel count").with_sample_rate(SAMPLE_RATE);
         println!("for device {} using input config {:?}", device.name()?, cfg);
 
@@ -62,7 +63,7 @@ impl Monitor {
 
         let another_stream_config = Arc::clone(&stream_config);
         let stream = match cfg.sample_format() {
-            cpal::SampleFormat::F32 => device.build_input_stream(
+            SampleFormat::F32 => device.build_input_stream(
                 &stream_config,
                 move |data: &[f32], _: &_| {
                     let mut any_buf_full = false;
@@ -93,7 +94,7 @@ impl Monitor {
                                 },
                                 None,
                             );
-                            let channel_name = &channel_map[&channel];
+                            let channel_name = &channel_map[channel];
                             result.insert(
                                 channel_name.to_string(),
                                 (sum_of_squares / count as f32).sqrt(),
@@ -159,6 +160,7 @@ fn main() -> anyhow::Result<()> {
     let _monitor = Monitor::create(
         device,
         Duration::from_nanos((1e9 / sampling_factor as f64) as u64),
+        config.min_channels,
         Box::leak(Box::new(channel_map)),
         send,
     )?;
